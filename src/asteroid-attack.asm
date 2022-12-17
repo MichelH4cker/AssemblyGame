@@ -84,7 +84,7 @@ geraMeteoro:
 	pop r0 ; posicao meteoro gerado
 
 	loadn r1, #39
-	cmp r0, r1 ; v c a posicao do meteoro esta na primeira linha ou nao (se sim, gera um novo / se nao, movimenta o q ja existe)
+	cmp r0, r1 ; ve se a posicao do meteoro esta na primeira linha ou nao (se sim, gera um novo / se nao, movimenta o q ja existe)
 	jgr moveMeteoro
 
 	loadn r1, #'!' ; coloca oa exclamacao de aviso 
@@ -152,7 +152,7 @@ geraNumero:
 	
 
 ;; ====================== MOVIMENTACAO ======================
-
+; os mesmo comentarios feitos para a funcao MovimentarW serve para as demais funcao de movimento
 MovimentarW:
 	pop r2
 	pop r1
@@ -165,14 +165,14 @@ MovimentarW:
 
 	sub r0, r0, r3  ; vai para linha de cima
 	loadn r3, #'^'  ; 
-	outchar r3, r0  ;
+	outchar r3, r0  ; coloca player na posicao
 	
 	push r0
 	push r1
 	push r2
 	jmp verificaColisao
 
-MovimentarA:
+MovimentarA: 
 	pop r2
 	pop r1
 	pop r0
@@ -230,7 +230,7 @@ MovimentarD:
 verificaColisao:
 
 	pop r2 ; incrementador
-	pop r1 ; posaicao meteoro
+	pop r1 ; posicao meteoro
 	pop r0 ; posicao nave
 
 	cmp r1, r0
