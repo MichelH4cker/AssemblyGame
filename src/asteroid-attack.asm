@@ -28,14 +28,16 @@ main:
 	loadn r2, #0
 	call print
 
+	call waitForBegin
+
 	;; limpa tela
-	call clearScreen
+	;call clearScreen
 
 	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
 	loadn r2, #0   ; incrementador
 
-	;call ColocarPersonagem
+	call ColocarPersonagem
 
 	halt
 
@@ -125,6 +127,30 @@ print:
 		pop r1
 
 		rts
+
+;; ====================== ESPERA INPUT CORRETO PARA COMEÇAR ======================
+
+waitForBegin:
+
+	push r0 
+	push r1
+
+	loadn r1, #13
+
+	loopInput:
+		inchar r0 ; le input do usuário
+
+		cmp r0, r1 ; compara input com char estabelecido
+		
+		jne loopInput
+
+		call clearScreen 
+	
+	pop r1
+	pop r0
+
+	rts
+
 
 ;; ====================== CLEAR SCREEN ======================
 clearScreen:
