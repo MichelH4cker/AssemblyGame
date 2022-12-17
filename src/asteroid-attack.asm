@@ -28,7 +28,8 @@ main:
 	loadn r2, #0
 	call print
 
-
+	;; limpa tela
+	call clearScreen
 
 	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
@@ -125,6 +126,24 @@ print:
 
 		rts
 
+;; ====================== CLEAR SCREEN ======================
+clearScreen:
+
+	push r5
+	push r6
+
+	loadn r5, #1200
+	loadn r6, #' '
+
+	clearScreenLoop:
+		dec r5
+		outchar r6, r5
+		jnz clearScreenLoop
+	
+	pop r6
+	pop r5
+
+	rts
 
 ;; ====================== METEORO ======================
 
