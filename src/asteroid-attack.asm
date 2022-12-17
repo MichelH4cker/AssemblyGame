@@ -1,10 +1,11 @@
 jmp main
 
+;; ====================== MAIN ======================
 main:
 
-	loadn r0, #420
-	loadn r1, #20 ; posicao
-	loadn r2, #0 ; incrementador
+	loadn r0, #420 ;
+	loadn r1, #20  ; posicao do personagem
+	loadn r2, #0   ; incrementador
 
 	call ColocarPersonagem
 
