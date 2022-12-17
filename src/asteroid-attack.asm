@@ -3,8 +3,7 @@ jmp main
 ;; ====================== MAIN ======================
 main:
 
-	loadn r0, #420 ;
-	loadn r1, #20  ; posicao do personagem
+	loadn r0, #420 ; posicao do personagem
 	loadn r2, #0   ; incrementador
 
 	call ColocarPersonagem
@@ -12,7 +11,7 @@ main:
 	halt
 
 	ColocarPersonagem:
-		loadn r1, #'$'
+		loadn r1, #'^'
 		outchar r1, r0
 
 		push r0
@@ -27,8 +26,6 @@ inicioJogo:
 	loadn r3, #65535
 
 	loopJogo:
-
-
 		inchar r0
 
 		loadn r1, #'w'
@@ -39,16 +36,13 @@ inicioJogo:
 		cmp r0, r1
 		jeq MovimentarA
 
-
 		loadn r1, #'s'
 		cmp r0, r1
 		jeq MovimentarS
 
-
 		loadn r1, #'d'
 		cmp r0, r1
 		jeq MovimentarD
-
 
 		cmp r2, r3 ; v c o contador bateu o max
 		jeq delay
