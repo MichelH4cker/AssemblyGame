@@ -1,12 +1,38 @@
-jmp main
+welcomestr: string 
+"########################################
 
+     BEM VINDO AO ASTEROID ATTACK!  
+
+########################################"
+
+startstr: string 
+"         [Press ENTER to start]        "
+
+
+jmp main
+	
 ;; ====================== MAIN ======================
 main:
 
+	;; PRINTA TELA INICIAL
+	
+	loadn r0, #0 ; posicao inicial da string
+	loadn r1, #welcomestr ; armazena string
+	loadn r2, #0 ; cor da string
+	call print
+
+	;loadn r0 # ; posicao inicial da string
+    loadn r5, #440
+	add r0, r0, r5
+	loadn r1, #startstr
+	loadn r2, #0
+	call print
+
+	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
 	loadn r2, #0   ; incrementador
 
-	call ColocarPersonagem
+	;call ColocarPersonagem
 
 	halt
 
@@ -63,6 +89,40 @@ fimJogo:
 	outchar r2, r0 ; apaga a exclamacao
 
 	rts
+
+;; ====================== PRINT ======================
+
+print:
+
+	; r0 posicao inicial
+	; r1 string
+	; r2 é a cor
+
+	push r1	
+	push r2	
+	push r3	
+	push r4	
+	
+	loadn r3, #'\0'	; criterio de parada
+
+	printLoop:	
+		loadi r4, r1    ; r4 <-- r1
+		cmp r4, r3      ; r4 == r3?
+		jeq printOut    ; se sim, sai da funcao
+		add r4, r2, r4  ; coloca cor 
+		outchar r4, r0  ; printa
+		inc r0   	    ; anda pelo mapa
+		inc r1	        ; anda pela string
+		jmp printLoop   ;
+
+	printOut:
+		pop r4	
+		pop r3
+		pop r2
+		pop r1
+
+		rts
+
 
 ;; ====================== METEORO ======================
 
