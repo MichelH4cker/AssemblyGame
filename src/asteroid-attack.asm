@@ -160,12 +160,12 @@ MovimentarW:
 
 	loadn r3, #' '
 
-	outchar r3, r0
-	loadn r3, #40
+	outchar r3, r0  ; coloca espaço vazio na antiga posição do player
+	loadn r3, #40   ; número para ir para linha de cima
 
-	sub r0, r0, r3
-	loadn r3, #'$'
-	outchar r3, r0
+	sub r0, r0, r3  ; vai para linha de cima
+	loadn r3, #'^'  ; 
+	outchar r3, r0  ;
 	
 	push r0
 	push r1
@@ -181,7 +181,7 @@ MovimentarA:
 	outchar r3, r0
 
 	dec r0
-	loadn r3, #'$'
+	loadn r3, #'^'
 	outchar r3, r0
 	
 	push r0
@@ -200,7 +200,7 @@ MovimentarS:
 	loadn r3, #40
 
 	add r0, r0, r3
-	loadn r3, #'$'
+	loadn r3, #'^'
 	outchar r3, r0
 	
 	push r0
@@ -217,7 +217,7 @@ MovimentarD:
 	outchar r3, r0
 
 	inc r0
-	loadn r3, #'$'
+	loadn r3, #'^'
 	outchar r3, r0
 	
 	push r0
