@@ -1,17 +1,17 @@
 jmp main
 
+;; ====================== MAIN ======================
 main:
 
-	loadn r0, #420
-	loadn r1, #20 ; posicao
-	loadn r2, #0 ; incrementador
+	loadn r0, #420 ; posicao do personagem
+	loadn r2, #0   ; incrementador
 
 	call ColocarPersonagem
 
 	halt
 
 	ColocarPersonagem:
-		loadn r1, #'$'
+		loadn r1, #'^'
 		outchar r1, r0
 
 		push r0
@@ -26,8 +26,6 @@ inicioJogo:
 	loadn r3, #65535
 
 	loopJogo:
-
-
 		inchar r0
 
 		loadn r1, #'w'
@@ -38,16 +36,13 @@ inicioJogo:
 		cmp r0, r1
 		jeq MovimentarA
 
-
 		loadn r1, #'s'
 		cmp r0, r1
 		jeq MovimentarS
 
-
 		loadn r1, #'d'
 		cmp r0, r1
 		jeq MovimentarD
-
 
 		cmp r2, r3 ; v c o contador bateu o max
 		jeq delay
@@ -89,7 +84,7 @@ geraMeteoro:
 	pop r0 ; posicao meteoro gerado
 
 	loadn r1, #39
-	cmp r0, r1 ; v c a posicao do meteoro esta na primeira linha ou nao (se sim, gera um novo / se nao, movimenta o q ja existe)
+	cmp r0, r1 ; ve se a posicao do meteoro esta na primeira linha ou nao (se sim, gera um novo / se nao, movimenta o q ja existe)
 	jgr moveMeteoro
 
 	loadn r1, #'!' ; coloca oa exclamacao de aviso 
@@ -157,7 +152,7 @@ geraNumero:
 	
 
 ;; ====================== MOVIMENTACAO ======================
-
+; os mesmo comentarios feitos para a funcao MovimentarW serve para as demais funcao de movimento
 MovimentarW:
 	pop r2
 	pop r1
@@ -165,19 +160,19 @@ MovimentarW:
 
 	loadn r3, #' '
 
-	outchar r3, r0
-	loadn r3, #40
+	outchar r3, r0  ; coloca espaço vazio na antiga posição do player
+	loadn r3, #40   ; número para ir para linha de cima
 
-	sub r0, r0, r3
-	loadn r3, #'$'
-	outchar r3, r0
+	sub r0, r0, r3  ; vai para linha de cima
+	loadn r3, #'^'  ; 
+	outchar r3, r0  ; coloca player na posicao
 	
 	push r0
 	push r1
 	push r2
 	jmp verificaColisao
 
-MovimentarA:
+MovimentarA: 
 	pop r2
 	pop r1
 	pop r0
@@ -186,7 +181,7 @@ MovimentarA:
 	outchar r3, r0
 
 	dec r0
-	loadn r3, #'$'
+	loadn r3, #'^'
 	outchar r3, r0
 	
 	push r0
@@ -205,7 +200,7 @@ MovimentarS:
 	loadn r3, #40
 
 	add r0, r0, r3
-	loadn r3, #'$'
+	loadn r3, #'^'
 	outchar r3, r0
 	
 	push r0
@@ -222,7 +217,7 @@ MovimentarD:
 	outchar r3, r0
 
 	inc r0
-	loadn r3, #'$'
+	loadn r3, #'^'
 	outchar r3, r0
 	
 	push r0
@@ -235,7 +230,7 @@ MovimentarD:
 verificaColisao:
 
 	pop r2 ; incrementador
-	pop r1 ; posaicao meteoro
+	pop r1 ; posicao meteoro
 	pop r0 ; posicao nave
 
 	cmp r1, r0
