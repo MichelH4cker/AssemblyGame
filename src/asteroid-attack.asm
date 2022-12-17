@@ -15,18 +15,20 @@ jmp main
 main:
 
 	;; PRINTA TELA INICIAL
-	
+	; printa welcomestr
 	loadn r0, #0 ; posicao inicial da string
 	loadn r1, #welcomestr ; armazena string
 	loadn r2, #0 ; cor da string
 	call print
 
-	;loadn r0 # ; posicao inicial da string
+	; printa startstr
     loadn r5, #440
 	add r0, r0, r5
 	loadn r1, #startstr
 	loadn r2, #0
 	call print
+
+
 
 	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
