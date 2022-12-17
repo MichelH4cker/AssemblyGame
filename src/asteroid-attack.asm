@@ -1,8 +1,39 @@
-jmp main
+welcomestr: string 
+"########################################
 
+     BEM VINDO AO ASTEROID ATTACK!  
+
+########################################"
+
+startstr: string 
+"         [Press ENTER to start]        "
+
+
+jmp main
+	
 ;; ====================== MAIN ======================
 main:
 
+	;; PRINTA TELA INICIAL
+	; printa welcomestr
+	loadn r0, #0 ; posicao inicial da string
+	loadn r1, #welcomestr ; armazena string
+	loadn r2, #0 ; cor da string
+	call print
+
+	; printa startstr
+    loadn r5, #440
+	add r0, r0, r5
+	loadn r1, #startstr
+	loadn r2, #0
+	call print
+
+	call waitForBegin
+
+	;; limpa tela
+	;call clearScreen
+
+	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
 	loadn r2, #0   ; incrementador
 
@@ -61,6 +92,82 @@ fimJogo:
 
 	loadn r2, #' '
 	outchar r2, r0 ; apaga a exclamacao
+
+	rts
+
+;; ====================== PRINT ======================
+
+print:
+
+	; r0 posicao inicial
+	; r1 string
+	; r2 é a cor
+
+	push r1	
+	push r2	
+	push r3	
+	push r4	
+	
+	loadn r3, #'\0'	; criterio de parada
+
+	printLoop:	
+		loadi r4, r1    ; r4 <-- r1
+		cmp r4, r3      ; r4 == r3?
+		jeq printOut    ; se sim, sai da funcao
+		add r4, r2, r4  ; coloca cor 
+		outchar r4, r0  ; printa
+		inc r0   	    ; anda pelo mapa
+		inc r1	        ; anda pela string
+		jmp printLoop   ;
+
+	printOut:
+		pop r4	
+		pop r3
+		pop r2
+		pop r1
+
+		rts
+
+;; ====================== ESPERA INPUT CORRETO PARA COMEÇAR ======================
+
+waitForBegin:
+
+	push r0 
+	push r1
+
+	loadn r1, #13
+
+	loopInput:
+		inchar r0 ; le input do usuário
+
+		cmp r0, r1 ; compara input com char estabelecido
+		
+		jne loopInput
+
+		call clearScreen 
+	
+	pop r1
+	pop r0
+
+	rts
+
+
+;; ====================== CLEAR SCREEN ======================
+clearScreen:
+
+	push r5
+	push r6
+
+	loadn r5, #1200
+	loadn r6, #' '
+
+	clearScreenLoop:
+		dec r5
+		outchar r6, r5
+		jnz clearScreenLoop
+	
+	pop r6
+	pop r5
 
 	rts
 
