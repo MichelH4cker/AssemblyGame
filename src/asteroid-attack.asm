@@ -8,12 +8,13 @@ welcomestr: string
 startstr: string 
 "         [Press ENTER to start]        "
 
+scorestr: string 
+"SCORE: "
 
 jmp main
 	
 ;; ====================== MAIN ======================
 main:
-
 	;; PRINTA TELA INICIAL
 	; printa welcomestr
 	loadn r0, #0 ; posicao inicial da string
@@ -29,6 +30,10 @@ main:
 	call print
 
 	call waitForBegin
+
+	;; COLOCA O PLACAR DO JOGO
+	loadn r3, #0 ; score inicial
+	call makeGameScore
 
 	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
@@ -49,11 +54,12 @@ ColocarPersonagem:
 	jmp inicioJogo
 			
 inicioJogo:
-
+	
 	loadn r2, #0
 	loadn r3, #65535
 
 	loopJogo:
+
 		inchar r0
 
 		loadn r1, #'w'
@@ -92,6 +98,39 @@ fimJogo:
 
 	rts
 
+;; ====================== GAME SCORE ======================
+makeGameScore:
+	; r3 e o score
+	
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+
+	; size of scorestr = 7
+	loadn r0, #0	     ; posicao
+	loadn r1, #scorestr  ; string
+	loadn r2, #512		 ; cor
+
+	call print
+	
+
+	loadn r4, #48
+	add r3, r4, r3	; Soma 48 que e' o caracter 0 da tabela ASCII
+
+	loadn r0, #7     ; posicao
+	add r3, r2, r3
+	outchar r3, r0
+
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	pop r4
+
+	rts
+
 ;; ====================== PRINT ======================
 
 print:
@@ -99,7 +138,7 @@ print:
 	; r0 posicao inicial
 	; r1 string
 	; r2 é a cor
-
+	push r0
 	push r1	
 	push r2	
 	push r3	
@@ -122,6 +161,7 @@ print:
 		pop r3
 		pop r2
 		pop r1
+		pop r0
 
 		rts
 
@@ -239,6 +279,9 @@ apagaMeteoro:
 
 	loadn r1, #' '
 	outchar r1, r0 ; apaga a exclamacao
+
+	
+	;call make score
 
 	jmp geraNumero
 
