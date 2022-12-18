@@ -38,15 +38,15 @@ main:
 
 	halt
 
-	ColocarPersonagem:
-		loadn r1, #'^'
-		outchar r1, r0
+ColocarPersonagem:
+	loadn r1, #'^'
+	outchar r1, r0
 
-		push r0
-		push r1
-		push r2
+	push r0
+	push r1
+	push r2
 
-		jmp inicioJogo
+	jmp inicioJogo
 			
 inicioJogo:
 
