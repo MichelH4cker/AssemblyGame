@@ -30,9 +30,6 @@ main:
 
 	call waitForBegin
 
-	;; limpa tela
-	;call clearScreen
-
 	;; FUNCIONAMENTO DO JOGO
 	loadn r0, #420 ; posicao do personagem
 	loadn r2, #0   ; incrementador
