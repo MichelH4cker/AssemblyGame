@@ -105,6 +105,8 @@ fimJogo:
 ;; ====================== GAME SCORE ======================
 makeGameScore:
 
+	; antes de chamar essa função, é preciso colocar quantos pontos deseja somar no registrador 3
+
 	push r0 
 	push r1
 	push r2
@@ -307,10 +309,8 @@ apagaMeteoro:
 	loadn r1, #' '
 	outchar r1, r0 ; apaga a exclamacao
 
-	push r3
 	loadn r3, #1
 	call makeGameScore
-	pop r3
 
 	jmp geraNumero
 
