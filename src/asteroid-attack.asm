@@ -11,6 +11,8 @@ startstr: string
 scorestr: string 
 "SCORE: "
 
+score: var #1
+
 jmp main
 	
 ;; ====================== MAIN ======================
@@ -32,7 +34,9 @@ main:
 	call waitForBegin
 
 	;; COLOCA O PLACAR DO JOGO
-	loadn r3, #0 ; score inicial
+	loadn r7, #0 ; score inicial
+	store score, r7 
+	loadn r3, #0 ; ponto a ser somado
 	call makeGameScore
 
 	;; FUNCIONAMENTO DO JOGO
@@ -100,35 +104,39 @@ fimJogo:
 
 ;; ====================== GAME SCORE ======================
 makeGameScore:
-	; r3 e o score
-	
-	push r0
+
+	push r0 
 	push r1
 	push r2
 	push r3
-	push r4
 
-	; size of scorestr = 7
+	call clearLine
+
+	; printa string score
 	loadn r0, #0	     ; posicao
 	loadn r1, #scorestr  ; string
 	loadn r2, #512		 ; cor
-
 	call print
+
+	; r3 => score atual
+	; r4 => ponto extra a ser somado com o score
+
+	load r1, score ; score atual
+	add r1, r3, r1 ; soma do score antigo com o novo ponto
+
+	store score, r1 ; armazena a pontuação total na memória
+
+	loadn r0, #48   ; número para conversão
+	add r1, r0, r1	; converte para caractere
 	
-
-	loadn r4, #48
-	add r3, r4, r3	; Soma 48 que e' o caracter 0 da tabela ASCII
-
-	loadn r0, #7     ; posicao
-	add r3, r2, r3
-	outchar r3, r0
+	loadn r0, #7  ; posicao para printar o score total
+	add r1, r2, r1	; adiciona cor
+	outchar r1, r0  ; printando
 
 	pop r3
 	pop r2
 	pop r1
 	pop r0
-	pop r4
-
 	rts
 
 ;; ====================== PRINT ======================
@@ -239,6 +247,7 @@ delay:
 	push r1
 	loadn r0, #0 ; volta o contador a 0
 	loadn r1, #65535 ; max do resistrador
+
 	jmp inicioJogo
 
 geraMeteoro:
@@ -298,8 +307,10 @@ apagaMeteoro:
 	loadn r1, #' '
 	outchar r1, r0 ; apaga a exclamacao
 
-	
-	;call make score
+	push r3
+	loadn r3, #1
+	call makeGameScore
+	pop r3
 
 	jmp geraNumero
 
