@@ -208,6 +208,24 @@ clearScreen:
 
 	rts
 
+clearLine:
+
+	push r5
+	push r6
+
+	loadn r5, #40
+	loadn r6, #' '
+
+	clearLineLoop:
+		dec r5
+		outchar r6, r5
+		jnz clearLineLoop
+	
+	pop r6
+	pop r5
+
+	rts
+
 ;; ====================== METEORO ======================
 
 delay:
