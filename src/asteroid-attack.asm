@@ -120,9 +120,6 @@ makeGameScore:
 	loadn r2, #512		 ; cor
 	call print
 
-	; r3 => score atual
-	; r4 => ponto extra a ser somado com o score
-
 	load r1, score ; score atual
 	add r1, r3, r1 ; soma do score antigo com o novo ponto
 
