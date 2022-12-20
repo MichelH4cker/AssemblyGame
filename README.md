@@ -23,3 +23,6 @@ Um jogo desenvolvido em linguagem Assembly para a matéria de Organização e Ar
 
 ## Como jogar
 Utilize as teclas WASD para movimentar a nave e desviar dos asteroides. Clique espaço para atirar e ganhar pontos ao acertar os projéteis. Divirta-se!
+
+## Trabalho que substitui a prova
+[Repositório das novas funções.](https://github.com/iTzFabregas/Processador-ICMC-new-function)
