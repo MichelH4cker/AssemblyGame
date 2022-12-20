@@ -10,7 +10,11 @@ welcomestr: string
 startstr: string 
 "         [Press ENTER to start]        "
 
+menustr: string
+"========================================"
 
+scorestr: string
+"SCORE: "
 
 ;Msn0: string "V O C E   V E N C E U !!!"
 ;Msn1: string "Quer jogar novamente? <s/n>"
@@ -28,6 +32,7 @@ posTiro: var #1			; Contem a posicao atual do Tiro
 posAntTiro: var #1		; Contem a posicao anterior do Tiro
 FlagTiro: var #1		; Flag para ver se Atirou ou nao (Barra de Espaco!!)
 
+score: var #1    ; Variavel para numero randomico
 
 Rand: var #40    ; Variavel para numero randomico
 ; Geracao de numeros randomicos para o jogo
@@ -88,13 +93,17 @@ main:
 	call print
 
 	; printa startstr
-    	loadn r5, #440
+    loadn r5, #440
 	add r0, r0, r5
 	loadn r1, #startstr
 	loadn r2, #0
 	call print
 
 	call waitForBegin
+
+	loadn r0, #0
+	loadn r3, #0
+	call makeScoreGame
 
 	;call ApagaTela
 
@@ -159,7 +168,37 @@ main:
 
 ;--------------------------FUNÇÕES------------------------
 
-;; COMPLETAMENTE ERRADO
+;=====================SCORE===========================
+makeScoreGame:
+
+	; o argumento dessa funcao e o registrador r3, responsável por guardar o valor do novo ponto a ser somado
+
+	push r0
+	push r1
+	push r2
+
+	loadn r0, #40
+	loadn r1, #menustr
+	loadn r2, #0
+	call print
+
+	loadn r0, #0		; posicao inicial
+	loadn r1, #scorestr	; string
+	call print
+
+	load r0, score
+	add r0, r3, r0 ; soma score antigo com score novo
+
+	store score, r0
+	loadn r1, #7
+	call Printnr
+
+	pop r2 
+	pop r1
+	pop r0
+
+	rts
+
 
 ;======================METEORO===========================
 
@@ -247,6 +286,7 @@ apagaMeteoro:
 	store posAntMeteoro, r2
 	store posMeteoro, r2
 
+
 	jmp geraNumero
 
 geraNumero:
@@ -297,6 +337,15 @@ verificaColisao_MetTiro:
 		store FlagTiro, r7
 
 		load r0, posMeteoro
+
+		push r0
+		push r3
+		load r0, score
+		loadn r3, #10
+		call makeScoreGame
+		pop r3
+		pop r0
+
 		jmp apagaMeteoro	
 
 fimJogo:
@@ -750,6 +799,85 @@ print:
 
 		rts
 
+;; ======================PRINT PARA NUMEROS======================
+
+Printnr:	; Imprime um numero menor que 1000 com todas as casas: Parametors: r0 - numero; r1 - posicao na tela
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r5
+	push r6
+
+	loadn r3, #9
+	loadn r2, #48
+	cmp r0, r3
+	jgr PrintnrDezena ; Se menor que 10, imprime o valor
+	add r0, r0, r2	; Soma 48 que e' o caracter 0 da tabela ASCII
+	outchar r0, r1	; Imprime na tela
+	jmp PrintnrRts	; Fim da subrotina
+
+PrintnrDezena:
+	loadn r3, #99
+	cmp r0, r3
+	jgr PrintnrCentena	; Se menor que 100, imprime os dois caracteres
+	loadn r6, #10
+	div r4, r0, r6
+	loadn r2, #48
+	add r5, r4, r2
+	outchar r5, r1
+	mul r4, r4, r6
+	sub r0, r0, r4
+	add r0, r0, r2
+	inc r1
+	outchar r0, r1
+	jmp PrintnrRts	; Fim da subrotina
+
+PrintnrCentena:
+	loadn r3, #999
+	cmp r0, r3
+	jgr PrintnrMilhar	; Se menor que 1000, imprime os 3 caracteres
+	loadn r6, #100
+	div r4, r0, r6
+	loadn r2, #48
+	add r5, r4, r2
+	outchar r5, r1
+	mul r4, r4, r6
+	sub r4, r0, r4
+	loadn r6, #10
+	div r0, r4, r6
+	loadn r2, #48
+	add r5, r0, r2
+	inc r1
+	outchar r5, r1
+	mul r0, r0, r6
+	sub r0, r4, r0
+	add r0, r0, r2
+	inc r1
+	outchar r0, r1
+	jmp PrintnrRts	; Fim da subrotina
+
+PrintnrMilhar:		; Se maior que 999, imprime ????
+	loadn r0, #'?'
+	outchar r0, r1
+	inc r1
+	outchar r0, r1
+	inc r1
+	outchar r0, r1
+	inc r1
+	outchar r0, r1
+
+PrintnrRts:	; Fim da subrotina
+	pop r6
+	pop r5
+	pop r4
+	pop r3
+	pop r2
+	pop r1
+	pop r0
+	rts	; Retorna da Subrotina mantendo todos os registradores intactos
+	
 ;; ====================== ESPERA INPUT CORRETO PARA COMEÇAR ======================
 
 waitForBegin:
