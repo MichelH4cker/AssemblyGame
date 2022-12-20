@@ -7,8 +7,18 @@ welcomestr: string
 
 ########################################"
 
+gameOverStr: string
+"########################################
+                                        
+            VOCE PERDEU!            
+                                        
+########################################"
+
 startstr: string 
 "         [Press ENTER to start]        "
+
+restartstr: string 
+"        [Press ENTER to restart]        "
 
 menustr: string
 "========================================"
@@ -24,9 +34,25 @@ Letra: var #1		; Contem a letra que foi digitada
 posNave: var #1			; Contem a posicao atual da Nave
 posAntNave: var #1		; Contem a posicao anterior da Nave
 
-numAleatorio: var #1
-posMeteoro: var #1		; Contem a posicao atual do Meteoro
-posAntMeteoro: var #1	; Contem a posicao anterior do Meteoro
+numAleatorio1: var #1
+posMeteoro1: var #1		; Contem a posicao atual do Meteoro
+posAntMeteoro1: var #1	; Contem a posicao anterior do Meteoro
+
+numAleatorio2: var #1
+posMeteoro2: var #1		; Contem a posicao atual do Meteoro
+posAntMeteoro2: var #1	; Contem a posicao anterior do Meteoro
+
+numAleatorio3: var #1
+posMeteoro3: var #1		; Contem a posicao atual do Meteoro
+posAntMeteoro3: var #1	; Contem a posicao anterior do Meteoro
+
+numAleatorio4: var #1
+posMeteoro4: var #1		; Contem a posicao atual do Meteoro
+posAntMeteoro4: var #1	; Contem a posicao anterior do Meteoro
+
+numAleatorio5: var #1
+posMeteoro5: var #1		; Contem a posicao atual do Meteoro
+posAntMeteoro5: var #1	; Contem a posicao anterior do Meteoro
 
 posTiro: var #1			; Contem a posicao atual do Tiro
 posAntTiro: var #1		; Contem a posicao anterior do Tiro
@@ -84,7 +110,6 @@ main:
 
 	call ApagaTela
 
-
 	;; PRINTA TELA INICIAL
 	; printa welcomestr
 	loadn r0, #0 ; posicao inicial da string
@@ -93,16 +118,18 @@ main:
 	call print
 
 	; printa startstr
-    loadn r5, #440
+    	loadn r5, #440
 	add r0, r0, r5
 	loadn r1, #startstr
 	loadn r2, #0
 	call print
 
 	call waitForBegin
-
+	
+	init:
 	loadn r0, #0
 	loadn r3, #0
+	store score, r0
 	call makeScoreGame
 
 	;call ApagaTela
@@ -132,11 +159,31 @@ main:
 	store posAntTiro, R0	; Zera Posicao Anterior do Tiro
 	
 	Loadn R0, #0
-	store posMeteoro, R0	; Zera Posicao Atual do Meteoro
-	store posAntMeteoro, R0	; Zera Posicao Anterior do Meteoro
+	store posMeteoro1, R0	; Zera Posicao Atual do Meteoro
+	store posAntMeteoro1, R0	; Zera Posicao Anterior do Meteoro
 	
+	Loadn R0, #10
+	store posMeteoro2, R0	; Zera Posicao Atual do Meteoro
+	store posAntMeteoro2, R0	; Zera Posicao Anterior do Meteoro
+
+	Loadn R0, #20
+	store posMeteoro3, R0	; Zera Posicao Atual do Meteoro
+	store posAntMeteoro3, R0	; Zera Posicao Anterior do Meteoro
+
+	Loadn R0, #30
+	store posMeteoro4, R0	; Zera Posicao Atual do Meteoro
+	store posAntMeteoro4, R0	; Zera Posicao Anterior do Meteoro
+
+	Loadn R0, #40
+	store posMeteoro5, R0	; Zera Posicao Atual do Meteoro
+	store posAntMeteoro5, R0	; Zera Posicao Anterior do Meteoro
+
 	Loadn R0, #0			; Contador para os Mods	= 0
 	loadn R2, #0			; Para verificar se (mod(c/10)==0
+
+	loadn R5, #15			;diferenca entre cada meteoro
+	loadn R6, #100			;velocidade inicial de spawn e movimento dos meteoros
+	loadn R7, #50			;velocidade maxima de spawn e movimento dos meteoros
 
 	;loadn R5, #0
 	;store posInicialMeteoro, R5
@@ -150,16 +197,44 @@ main:
 		cmp R1, R2			; if (mod(c/10)==0
 		ceq MoveNave		; Chama Rotina de movimentacao da Nave
 	
-		loadn R1, #100		; velocidade de spawn e do meteoro
+		loadi R1, R6		; velocidade de spawn e do meteoro
 		mod R1, R0, R1
 		cmp R1, R2			; if (mod(c/30)==0
-		ceq moveMeteoro		; Chama Rotina de movimentacao do Meteoro
+		ceq moveMeteoro1		; Chama Rotina de movimentacao do Meteoro
 	
+		loadi R1, R6		; velocidade de spawn e do meteoro
+		add R1, R1, R5
+		mod R1, R0, R1
+		cmp R1, R2			; if (mod(c/30)==0
+		ceq moveMeteoro2		; Chama Rotina de movimentacao do Meteoro
+
+		loadi R1, R6		; velocidade de spawn e do meteoro
+		add R1, R1, R5
+		mod R1, R0, R1
+		cmp R1, R2			; if (mod(c/30)==0
+		ceq moveMeteoro3		; Chama Rotina de movimentacao do Meteoro
+
+		loadi R1, R6		; velocidade de spawn e do meteoro
+		add R1, R1, R5
+		mod R1, R0, R1
+		cmp R1, R2			; if (mod(c/30)==0
+		ceq moveMeteoro4		; Chama Rotina de movimentacao do Meteoro
+
+		loadi R1, R6		; velocidade de spawn e do meteoro
+		add R1, R1, R5
+		mod R1, R0, R1
+		cmp R1, R2			; if (mod(c/30)==0
+		ceq moveMeteoro5		; Chama Rotina de movimentacao do Meteoro
+
 		loadn R1, #75		; velocidade do tiro
 		mod R1, R0, R1
 		cmp R1, R2			; if (mod(c/2)==0
 		ceq MoveTiro		; Chama Rotina de movimentacao do Tiro
 
+		cmp R6, R7
+		jeq naoAcelera
+			dec R6;
+		naoAcelera:
 
 		call Delay
 		inc R0 	;c++
@@ -177,12 +252,12 @@ makeScoreGame:
 	push r1
 	push r2
 
-	loadn r0, #40
+	loadn r0, #1080
 	loadn r1, #menustr
 	loadn r2, #0
 	call print
 
-	loadn r0, #0		; posicao inicial
+	loadn r0, #1120		; posicao inicial
 	loadn r1, #scorestr	; string
 	call print
 
@@ -190,7 +265,7 @@ makeScoreGame:
 	add r0, r3, r0 ; soma score antigo com score novo
 
 	store score, r0
-	loadn r1, #7
+	loadn r1, #1126
 	call Printnr
 
 	pop r2 
@@ -200,23 +275,29 @@ makeScoreGame:
 	rts
 
 
-;======================METEORO===========================
+;********************************************************
+;
+;				METEOROS
+;
+;********************************************************
 
-geraMeteoro:
+;======================METEORO 1===========================
+
+geraMeteoro1:
 	
-	store posMeteoro, r0
+	store posMeteoro1, r0
 
 	loadn r1, #'!' ; coloca oa exclamacao de aviso
 	outchar r1, r0
 
-	store posAntMeteoro, r0
+	store posAntMeteoro1, r0
 	loadn r1, #40
 	add r0, r0, r1
-	store posMeteoro, r0
+	store posMeteoro1, r0
 
-	jmp moveMeteoro_Apaga
+	jmp moveMeteoro_Apaga1
 
-moveMeteoro:
+moveMeteoro1:
 	push fr
 	push r0
 	push r1
@@ -226,22 +307,173 @@ moveMeteoro:
 	push r6
 	push r7
 
-	load r0, posMeteoro
+	load r0, posMeteoro1
 	loadn r1, #0
 	cmp r0, r1
-	jeq geraMeteoro
+	jeq geraMeteoro1
 	
-	loadn r1, #1000 		; v c o meteoro chegou no fim da tela
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
 	cmp r0, r1
-	jgr apagaMeteoro
+	jgr apagaMeteoro1
 
 	loadn r1, #' ' 		; apaga o meteoro
 	outchar r1, r0
 
-	store posAntMeteoro, r0
+	store posAntMeteoro1, r0
 	loadn r1, #40 		; movimenta o meteoro
 	add r0, r0, r1
-	store posMeteoro, r0
+	store posMeteoro1, r0
+
+	loadn r1, #'*' 		; coloca o meteoro
+	outchar r1, r0
+
+	load r1, posNave
+	cmp r1, r0
+	jeq fimJogo
+	
+	jmp verificaColisao_MetTiro1
+
+	moveMeteoro_Apaga1:
+		pop r7
+		pop r6
+		pop r4
+		pop r3
+		pop r2
+		pop r1
+		pop r0
+		pop fr
+		rts
+
+apagaMeteoro1:
+
+	loadn r1, #' ' ; apaga o meteoro
+	outchar r1, r0
+
+	loadn r1, #40
+	mod r0, r0, r1 ; volta ate a posicao da exclamacao
+
+	loadn r1, #' '
+	outchar r1, r0 ; apaga a exclamacao
+
+	loadn r2, #0
+	store posAntMeteoro1, r2
+	store posMeteoro1, r2
+
+
+	jmp geraNumero1
+
+geraNumero1:
+
+	load r1, posNave
+	loadn r0, #Rand
+	add r0, r0, r1
+
+	load r1, posAntMeteoro4
+	add r0, r0, r1
+
+	loadn r1, #40
+	mod r0, r0, r1
+	store numAleatorio1, r0
+
+	;push r0
+	jmp geraMeteoro1
+
+;; ====================== COLISAO ======================
+
+verificaColisao_MetTiro1:
+
+
+	load r0, posAntTiro
+	load r1, posMeteoro1
+	load r2, posAntMeteoro1
+	load r3, posTiro
+
+	cmp r1, r0			;
+	jeq destroiMet1		; faz varias comparacoes pq em velocidades altas ele nao detecta colisao
+					
+	cmp r0, r2			;
+	jeq destroiMet1		;
+
+	cmp r3, r0			;
+	jeq destroiMet1		;
+
+	cmp r3, r2			;
+	jeq destroiMet1		;
+
+	jmp moveMeteoro_Apaga1
+
+	destroiMet1:
+		load r0, posAntTiro
+		loadn r1, #' '
+		outchar r1, r0
+		loadn r7, #0
+		store FlagTiro, r7
+
+		load r0, posMeteoro1
+
+		push r0
+		push r3
+		load r0, score
+		loadn r3, #1
+		call makeScoreGame
+		pop r3
+		pop r0
+
+		jmp apagaMeteoro1	
+
+; ----------------------------------------------
+
+; =================METEORO 2========================
+
+geraMeteoro2:
+	
+	store posMeteoro2, r0
+
+	load r3, posAntMeteoro1
+	cmp r0, r3
+
+	continuaSpawn2:
+
+	loadn r1, #'!' ; coloca oa exclamacao de aviso
+	outchar r1, r0
+
+	store posAntMeteoro2, r0
+	loadn r1, #40
+	add r0, r0, r1
+	store posMeteoro2, r0
+
+	jmp moveMeteoro_Apaga2
+
+	mudaSpawn2:
+		loadn r0, #10
+		jmp continuaSpawn2
+
+moveMeteoro2:
+	push fr
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r6
+	push r7
+
+	load r0, posMeteoro2
+	loadn r1, #0
+	cmp r0, r1
+	jeq geraMeteoro2
+	
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
+	cmp r0, r1
+	jgr apagaMeteoro2
+
+	loadn r1, #' ' 		; apaga o meteoro
+	outchar r1, r0
+
+	store posAntMeteoro2, r0
+	loadn r1, #40 		; movimenta o meteoro
+	add r0, r0, r1
+	store posMeteoro2, r0
 
 	loadn r1, #'*' 		; coloca o meteoro
 	outchar r1, r0
@@ -258,9 +490,9 @@ moveMeteoro:
 	cmp r1, r0
 	jeq fimJogo
 	
-	jmp verificaColisao_MetTiro
+	jmp verificaColisao_MetTiro2
 
-	moveMeteoro_Apaga:
+	moveMeteoro_Apaga2:
 		pop r7
 		pop r6
 		pop r4
@@ -271,7 +503,7 @@ moveMeteoro:
 		pop fr
 		rts
 
-apagaMeteoro:
+apagaMeteoro2:
 
 	loadn r1, #' ' ; apaga o meteoro
 	outchar r1, r0
@@ -283,71 +515,546 @@ apagaMeteoro:
 	outchar r1, r0 ; apaga a exclamacao
 
 	loadn r2, #0
-	store posAntMeteoro, r2
-	store posMeteoro, r2
+	store posAntMeteoro2, r2
+	store posMeteoro2, r2
 
 
-	jmp geraNumero
+	jmp geraNumero2
 
-geraNumero:
+geraNumero2:
 
 	load r1, posNave
 	loadn r0, #Rand
 	add r0, r0, r1
 
-	load r1, posAntMeteoro
+	load r1, posAntMeteoro4
 	add r0, r0, r1
 
 	loadn r1, #40
 	mod r0, r0, r1
-	store numAleatorio, r0
+	store numAleatorio2, r0
 
 	;push r0
-	jmp geraMeteoro
+	jmp geraMeteoro2
 
 ;; ====================== COLISAO ======================
 
-verificaColisao_MetTiro:
+verificaColisao_MetTiro2:
 
 
 	load r0, posAntTiro
-	load r1, posMeteoro
-	load r2, posAntMeteoro
+	load r1, posMeteoro2
+	load r2, posAntMeteoro2
 	load r3, posTiro
 
 	cmp r1, r0			;
-	jeq destroiMet		; faz varias comparacoes pq em velocidades altas ele nao detecta colisao
+	jeq destroiMet2		; faz varias comparacoes pq em velocidades altas ele nao detecta colisao
 					
 	cmp r0, r2			;
-	jeq destroiMet		;
+	jeq destroiMet2		;
 
 	cmp r3, r0			;
-	jeq destroiMet		;
+	jeq destroiMet2		;
 
 	cmp r3, r2			;
-	jeq destroiMet		;
+	jeq destroiMet2		;
 
-	jmp moveMeteoro_Apaga
+	jmp moveMeteoro_Apaga2
 
-	destroiMet:
+	destroiMet2:
 		load r0, posAntTiro
 		loadn r1, #' '
 		outchar r1, r0
 		loadn r7, #0
 		store FlagTiro, r7
 
-		load r0, posMeteoro
+		load r0, posMeteoro2
 
 		push r0
 		push r3
 		load r0, score
-		loadn r3, #10
+		loadn r3, #1
 		call makeScoreGame
 		pop r3
 		pop r0
 
-		jmp apagaMeteoro	
+		jmp apagaMeteoro2	
 
+; --------------------------------------------------------
+
+;=====================METEORO 3================================
+
+geraMeteoro3:
+	
+	store posMeteoro3, r0
+
+	load r3, posAntMeteoro2
+	cmp r0, r3
+
+	continuaSpawn3:
+
+	loadn r1, #'!' ; coloca oa exclamacao de aviso
+	outchar r1, r0
+
+	store posAntMeteoro3, r0
+	loadn r1, #40
+	add r0, r0, r1
+	store posMeteoro3, r0
+
+	jmp moveMeteoro_Apaga3
+
+	mudaSpawn3:
+		loadn r0, #20
+		jmp continuaSpawn3
+
+moveMeteoro3:
+	push fr
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r6
+	push r7
+
+	load r0, posMeteoro3
+	loadn r1, #0
+	cmp r0, r1
+	jeq geraMeteoro3
+	
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
+	cmp r0, r1
+	jgr apagaMeteoro3
+
+	loadn r1, #' ' 		; apaga o meteoro
+	outchar r1, r0
+
+	store posAntMeteoro3, r0
+	loadn r1, #40 		; movimenta o meteoro
+	add r0, r0, r1
+	store posMeteoro3, r0
+
+	loadn r1, #'*' 		; coloca o meteoro
+	outchar r1, r0
+
+
+;	loadn r1, #0
+;	push r0
+;	push r1
+
+;	loadn r0, #0 ; volta o contador a 0
+;	loadn r1, #65535
+
+	load r1, posNave
+	cmp r1, r0
+	jeq fimJogo
+	
+	jmp verificaColisao_MetTiro3
+
+	moveMeteoro_Apaga3:
+		pop r7
+		pop r6
+		pop r4
+		pop r3
+		pop r2
+		pop r1
+		pop r0
+		pop fr
+		rts
+
+apagaMeteoro3:
+
+	loadn r1, #' ' ; apaga o meteoro
+	outchar r1, r0
+
+	loadn r1, #40
+	mod r0, r0, r1 ; volta ate a posicao da exclamacao
+
+	loadn r1, #' '
+	outchar r1, r0 ; apaga a exclamacao
+
+	loadn r2, #0
+	store posAntMeteoro3, r2
+	store posMeteoro3, r2
+
+
+	jmp geraNumero3
+
+geraNumero3:
+
+	load r1, posNave
+	loadn r0, #Rand
+	add r0, r0, r1
+
+	load r1, posAntMeteoro5
+	add r0, r0, r1
+
+	loadn r1, #40
+	mod r0, r0, r1
+	store numAleatorio3, r0
+
+	;push r0
+	jmp geraMeteoro3
+
+;; ====================== COLISAO ======================
+
+verificaColisao_MetTiro3:
+
+
+	load r0, posAntTiro
+	load r1, posMeteoro3
+	load r2, posAntMeteoro3
+	load r3, posTiro
+
+	cmp r1, r0			;
+	jeq destroiMet3		; faz varias comparacoes pq em velocidades altas ele nao detecta colisao
+					
+	cmp r0, r2			;
+	jeq destroiMet3		;
+
+	cmp r3, r0			;
+	jeq destroiMet3		;
+
+	cmp r3, r2			;
+	jeq destroiMet3		;
+
+	jmp moveMeteoro_Apaga3
+
+	destroiMet3:
+		load r0, posAntTiro
+		loadn r1, #' '
+		outchar r1, r0
+		loadn r7, #0
+		store FlagTiro, r7
+
+		load r0, posMeteoro3
+
+		push r0
+		push r3
+		load r0, score
+		loadn r3, #1
+		call makeScoreGame
+		pop r3
+		pop r0
+
+		jmp apagaMeteoro3	
+
+;------------------------------------------------------------
+
+;======================= METEORO 4============================
+
+geraMeteoro4:
+	
+	store posMeteoro4, r0
+
+	load r3, posAntMeteoro3
+	cmp r0, r3
+
+	continuaSpawn4:
+
+	loadn r1, #'!' ; coloca oa exclamacao de aviso
+	outchar r1, r0
+
+	store posAntMeteoro4, r0
+	loadn r1, #40
+	add r0, r0, r1
+	store posMeteoro4, r0
+
+	jmp moveMeteoro_Apaga4
+
+	mudaSpawn4:
+		loadn r0, #30
+		jmp continuaSpawn4
+
+moveMeteoro4:
+	push fr
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r6
+	push r7
+
+	load r0, posMeteoro4
+	loadn r1, #0
+	cmp r0, r1
+	jeq geraMeteoro4
+	
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
+	cmp r0, r1
+	jgr apagaMeteoro4
+
+	loadn r1, #' ' 		; apaga o meteoro
+	outchar r1, r0
+
+	store posAntMeteoro4, r0
+	loadn r1, #40 		; movimenta o meteoro
+	add r0, r0, r1
+	store posMeteoro4, r0
+
+	loadn r1, #'*' 		; coloca o meteoro
+	outchar r1, r0
+
+
+;	loadn r1, #0
+;	push r0
+;	push r1
+
+;	loadn r0, #0 ; volta o contador a 0
+;	loadn r1, #65535
+
+	load r1, posNave
+	cmp r1, r0
+	jeq fimJogo
+	
+	jmp verificaColisao_MetTiro4
+
+	moveMeteoro_Apaga4:
+		pop r7
+		pop r6
+		pop r4
+		pop r3
+		pop r2
+		pop r1
+		pop r0
+		pop fr
+		rts
+
+apagaMeteoro4:
+
+	loadn r1, #' ' ; apaga o meteoro
+	outchar r1, r0
+
+	loadn r1, #40
+	mod r0, r0, r1 ; volta ate a posicao da exclamacao
+
+	loadn r1, #' '
+	outchar r1, r0 ; apaga a exclamacao
+
+	loadn r2, #0
+	store posAntMeteoro4, r2
+	store posMeteoro4, r2
+
+
+	jmp geraNumero4
+
+geraNumero4:
+
+	load r1, posNave
+	loadn r0, #Rand
+	add r0, r0, r1
+
+	load r1, posAntMeteoro1
+	add r0, r0, r1
+
+	loadn r1, #40
+	mod r0, r0, r1
+	store numAleatorio4, r0
+
+	;push r0
+	jmp geraMeteoro4
+
+;; ====================== COLISAO ======================
+
+verificaColisao_MetTiro4:
+
+
+	load r0, posAntTiro
+	load r1, posMeteoro4
+	load r2, posAntMeteoro4
+	load r3, posTiro
+
+	cmp r1, r0			;
+	jeq destroiMet4		; faz varias comparacoes pq em velocidades altas ele nao detecta colisao
+					
+	cmp r0, r2			;
+	jeq destroiMet4		;
+
+	cmp r3, r0			;
+	jeq destroiMet4		;
+
+	cmp r3, r2			;
+	jeq destroiMet4		;
+
+	jmp moveMeteoro_Apaga4
+
+	destroiMet4:
+		load r0, posAntTiro
+		loadn r1, #' '
+		outchar r1, r0
+		loadn r7, #0
+		store FlagTiro, r7
+
+		load r0, posMeteoro4
+
+		push r0
+		push r3
+		load r0, score
+		loadn r3, #1
+		call makeScoreGame
+		pop r3
+		pop r0
+
+		jmp apagaMeteoro4	
+
+;---------------------------------------------------
+
+;===================METEORO 5=======================
+
+geraMeteoro5:
+	
+	store posMeteoro5, r0
+
+	load r3, posAntMeteoro4
+	cmp r0, r3
+
+	continuaSpawn5:
+
+	loadn r1, #'!' ; coloca oa exclamacao de aviso
+	outchar r1, r0
+
+	store posAntMeteoro5, r0
+	loadn r1, #40
+	add r0, r0, r1
+	store posMeteoro5, r0
+
+	jmp moveMeteoro_Apaga5
+
+	mudaSpawn5:
+		loadn r0, #30
+		jmp continuaSpawn5
+
+moveMeteoro5:
+	push fr
+	push r0
+	push r1
+	push r2
+	push r3
+	push r4
+	push r6
+	push r7
+
+	load r0, posMeteoro5
+	loadn r1, #0
+	cmp r0, r1
+	jeq geraMeteoro5
+	
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
+	cmp r0, r1
+	jgr apagaMeteoro5
+
+	loadn r1, #' ' 		; apaga o meteoro
+	outchar r1, r0
+
+	store posAntMeteoro5, r0
+	loadn r1, #40 		; movimenta o meteoro
+	add r0, r0, r1
+	store posMeteoro5, r0
+
+	loadn r1, #'*' 		; coloca o meteoro
+	outchar r1, r0
+
+
+	load r1, posNave
+	cmp r1, r0
+	jeq fimJogo
+	
+	jmp verificaColisao_MetTiro5
+
+	moveMeteoro_Apaga5:
+		pop r7
+		pop r6
+		pop r4
+		pop r3
+		pop r2
+		pop r1
+		pop r0
+		pop fr
+		rts
+
+apagaMeteoro5:
+
+	loadn r1, #' ' ; apaga o meteoro
+	outchar r1, r0
+
+	loadn r1, #40
+	mod r0, r0, r1 ; volta ate a posicao da exclamacao
+
+	loadn r1, #' '
+	outchar r1, r0 ; apaga a exclamacao
+
+	loadn r2, #0
+	store posAntMeteoro5, r2
+	store posMeteoro5, r2
+
+
+	jmp geraNumero5
+
+geraNumero5:
+
+	load r1, posNave
+	loadn r0, #Rand
+	add r0, r0, r1
+
+	load r1, posAntMeteoro2
+	add r0, r0, r1
+
+	loadn r1, #40
+	mod r0, r0, r1
+	store numAleatorio5, r0
+
+	;push r0
+	jmp geraMeteoro5
+
+;; ====================== COLISAO ======================
+
+verificaColisao_MetTiro5:
+
+
+	load r0, posAntTiro
+	load r1, posMeteoro5
+	load r2, posAntMeteoro5
+	load r3, posTiro
+
+	cmp r1, r0			;
+	jeq destroiMet5		; faz varias comparacoes pq em velocidades altas ele nao detecta colisao
+					
+	cmp r0, r2			;
+	jeq destroiMet5		;
+
+	cmp r3, r0			;
+	jeq destroiMet5		;
+
+	cmp r3, r2			;
+	jeq destroiMet5		;
+
+	jmp moveMeteoro_Apaga5
+
+	destroiMet5:
+		load r0, posAntTiro
+		loadn r1, #' '
+		outchar r1, r0
+		loadn r7, #0
+		store FlagTiro, r7
+
+		load r0, posMeteoro5
+
+		push r0
+		push r3
+		load r0, score
+		loadn r3, #1
+		call makeScoreGame
+		pop r3
+		pop r0
+
+		jmp apagaMeteoro5	
+
+;=============================================================
+;				FIM DOS METEOROS
+;=============================================================
+
+;=========================GAME OVER===========================
 fimJogo:
 	loadn r2, #' '		; apaga o meteoro
 	outchar r2, r0		; e apaga a nave
@@ -359,10 +1066,40 @@ fimJogo:
 	loadn r2, #' '
 	outchar r2, r0
 
-	halt				; para o jogo
+	;print da tela de game over
+	call ApagaTela
 
-	jmp moveMeteoro_Apaga
+	push r0
+	push r1
+	push r2
+	push r5
 
+	loadn r0, #0
+	loadn r1, #gameOverStr
+	loadn r2, #0
+	call print
+
+	loadn r5, #440
+	add r0, r0, r5
+	loadn r1, #restartstr
+	loadn r2, #0
+	call print
+
+    loadn r5, #440
+	add r0, r0, r5
+	loadn r1, #scorestr
+	loadn r2, #0
+	call print
+
+	load r0, score
+	loadn r1, #1126
+	call Printnr
+
+	load r0, score
+	;espera enter para reiniciar
+	call waitForBegin
+
+	jmp init
 
 
 ;===========================NAVE==============================
@@ -482,7 +1219,7 @@ MoveNave_RecalculaPos:		; Recalcula posicao da Nave em funcao das Teclas pressio
 	jmp MoveNave_RecalculaPos_Fim
 
   MoveNave_RecalculaPos_S:	; Move Nave para Baixo
-	loadn R1, #1159
+	loadn R1, #1039
 	cmp R0, R1		; Testa condicoes de Contorno
 	jgr MoveNave_RecalculaPos_Fim
 	loadn R1, #40
@@ -546,32 +1283,6 @@ MoveTiro:
 	sub r4, r4, r3
 	store posTiro, r4
 	jmp MoveTiro_Final
-
-
-;------
-	;load r2, PosTiro
-	;loadn r3, #40
-	;loadn r6, #39
-	;mod r7, r2, r3
-	;cmp r7, r6
-	;jeq MoveTiro_Apaga
-
-	;load r0, PosAntTiro
-	;loadn r1, #' '
-	;outchar r1, r0       ;apaga a posicao anterior do tiro
-
-	;load r4, PosTiro
-	;store PosAntTiro, r4
-
-	;loadn r1, #'o'      ;imprimi o caracter do tiro
-	;outchar r1, r4
-	;inc r4
-	;store PosTiro, r4
-	;jmp MoveTiro_Final
-
-
-	
-
 
 	MoveTiro_Apaga:
 		load r0, posAntTiro
