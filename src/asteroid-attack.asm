@@ -79,6 +79,7 @@ main:
 
 	call ApagaTela
 
+
 	;; PRINTA TELA INICIAL
 	; printa welcomestr
 	loadn r0, #0 ; posicao inicial da string
@@ -157,7 +158,6 @@ main:
 		jmp Loop
 
 ;--------------------------FUNÇÕES------------------------
-
 
 ;; COMPLETAMENTE ERRADO
 
