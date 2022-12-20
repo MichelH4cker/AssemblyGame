@@ -110,7 +110,6 @@ main:
 
 	call ApagaTela
 
-
 	;; PRINTA TELA INICIAL
 	; printa welcomestr
 	loadn r0, #0 ; posicao inicial da string
@@ -253,12 +252,12 @@ makeScoreGame:
 	push r1
 	push r2
 
-	loadn r0, #40
+	loadn r0, #1080
 	loadn r1, #menustr
 	loadn r2, #0
 	call print
 
-	loadn r0, #0		; posicao inicial
+	loadn r0, #1120		; posicao inicial
 	loadn r1, #scorestr	; string
 	call print
 
@@ -266,7 +265,7 @@ makeScoreGame:
 	add r0, r3, r0 ; soma score antigo com score novo
 
 	store score, r0
-	loadn r1, #7
+	loadn r1, #1126
 	call Printnr
 
 	pop r2 
@@ -274,8 +273,6 @@ makeScoreGame:
 	pop r0
 
 	rts
-
-
 
 
 ;********************************************************
