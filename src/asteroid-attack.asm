@@ -132,11 +132,11 @@ main:
 	store score, r0
 	call makeScoreGame
 
-	;call ApagaTela
+	call ApagaTela
 
-	;loadn R1, #tela1Linha0	; Endereco onde comeca a primeira linha do cenario!!
-	;loadn R2, #1536  			; cor branca!
-	;call ImprimeTela2   		;  Rotina de Impresao de Cenario na Tela Inteira
+	loadn R1, #tela1Linha0	; Endereco onde comeca a primeira linha do cenario!!
+	loadn R2, #0  			; cor branca!
+	call ImprimeTela2   		;  Rotina de Impresao de Cenario na Tela Inteira
     
 	;loadn R1, #tela2Linha0	; Endereco onde comeca a primeira linha do cenario!!
 	;loadn R2, #512  			; cor branca!
@@ -1712,29 +1712,29 @@ tela0Linha29 : string "                                        "
 tela1Linha0  : string "                                        "
 tela1Linha1  : string "                                        "
 tela1Linha2  : string "                                        "
-tela1Linha3  : string "                                        "
+tela1Linha3  : string "                .                       "
 tela1Linha4  : string "                                        "
 tela1Linha5  : string "                                        "
 tela1Linha6  : string "                                        "
 tela1Linha7  : string "                                        "
-tela1Linha8  : string "                        @@@@            "
-tela1Linha9  : string "                      @@@@@@@@@@        "
-tela1Linha10 : string "                       @@@@@@@@@@@@     "
-tela1Linha11 : string "                         @@@            "
+tela1Linha8  : string "          .                             "
+tela1Linha9  : string "                           .            "
+tela1Linha10 : string "                                        "
+tela1Linha11 : string "            .                           "
 tela1Linha12 : string "                                        "
 tela1Linha13 : string "                                        "
 tela1Linha14 : string "                                        "
-tela1Linha15 : string "                                        "
+tela1Linha15 : string "     .                                  "
 tela1Linha16 : string "                                        "
-tela1Linha17 : string "                                        "
+tela1Linha17 : string "                            .           "
 tela1Linha18 : string "                                        "
 tela1Linha19 : string "                                        "
 tela1Linha20 : string "                                        "
-tela1Linha21 : string "                                        "
+tela1Linha21 : string "          .            .                "
 tela1Linha22 : string "                                        "
 tela1Linha23 : string "                                        "
-tela1Linha24 : string "                                        "
-tela1Linha25 : string "                                        "
+tela1Linha24 : string "               .                        "
+tela1Linha25 : string "                             .          "
 tela1Linha26 : string "                                        "
 tela1Linha27 : string "                                        "
 tela1Linha28 : string "                                        "
