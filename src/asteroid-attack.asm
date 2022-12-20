@@ -135,7 +135,7 @@ main:
 	call ApagaTela
 
 	loadn R1, #tela1Linha0	; Endereco onde comeca a primeira linha do cenario!!
-	loadn R2, #0  			; cor branca!
+	loadn R2, #1536  			; cor branca!
 	call ImprimeTela2   		;  Rotina de Impresao de Cenario na Tela Inteira
     
 	;loadn R1, #tela2Linha0	; Endereco onde comeca a primeira linha do cenario!!
@@ -154,6 +154,7 @@ main:
 	store posNave, R0		; Zera Posicao Atual da Nave
 	store posAntNave, R0	; Zera Posicao Anterior da Nave
 	
+	loadn R0, #0
 	store FlagTiro, R0		; Zera o Flag para marcar que ainda nao Atirou!
 	store posTiro, R0		; Zera Posicao Atual do Tiro
 	store posAntTiro, R0	; Zera Posicao Anterior do Tiro
@@ -394,7 +395,7 @@ verificaColisao_MetTiro1:
 	cmp r0, r2			;
 	jeq destroiMet1		;
 
-	cmp r3, r0			;
+	cmp r3, r1			;
 	jeq destroiMet1		;
 
 	cmp r3, r2			;
@@ -553,7 +554,7 @@ verificaColisao_MetTiro2:
 	cmp r0, r2			;
 	jeq destroiMet2		;
 
-	cmp r3, r0			;
+	cmp r3, r1			;
 	jeq destroiMet2		;
 
 	cmp r3, r2			;
@@ -712,7 +713,7 @@ verificaColisao_MetTiro3:
 	cmp r0, r2			;
 	jeq destroiMet3		;
 
-	cmp r3, r0			;
+	cmp r3, r1			;
 	jeq destroiMet3		;
 
 	cmp r3, r2			;
@@ -871,7 +872,7 @@ verificaColisao_MetTiro4:
 	cmp r0, r2			;
 	jeq destroiMet4		;
 
-	cmp r3, r0			;
+	cmp r3, r1			;
 	jeq destroiMet4		;
 
 	cmp r3, r2			;
@@ -1023,7 +1024,7 @@ verificaColisao_MetTiro5:
 	cmp r0, r2			;
 	jeq destroiMet5		;
 
-	cmp r3, r0			;
+	cmp r3, r1			;
 	jeq destroiMet5		;
 
 	cmp r3, r2			;
@@ -1839,4 +1840,3 @@ tela4Linha26 : string "                 ...                    "
 tela4Linha27 : string "                ...                     "
 tela4Linha28 : string "               ....                     "
 tela4Linha29 : string "              .....                     "
-
