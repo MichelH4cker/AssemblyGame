@@ -312,7 +312,7 @@ moveMeteoro1:
 	cmp r0, r1
 	jeq geraMeteoro1
 	
-	loadn r1, #1000 		; v c o meteoro chegou no fim da tela
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
 	cmp r0, r1
 	jgr apagaMeteoro1
 
@@ -463,7 +463,7 @@ moveMeteoro2:
 	cmp r0, r1
 	jeq geraMeteoro2
 	
-	loadn r1, #1000 		; v c o meteoro chegou no fim da tela
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
 	cmp r0, r1
 	jgr apagaMeteoro2
 
@@ -622,7 +622,7 @@ moveMeteoro3:
 	cmp r0, r1
 	jeq geraMeteoro3
 	
-	loadn r1, #1000 		; v c o meteoro chegou no fim da tela
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
 	cmp r0, r1
 	jgr apagaMeteoro3
 
@@ -781,7 +781,7 @@ moveMeteoro4:
 	cmp r0, r1
 	jeq geraMeteoro4
 	
-	loadn r1, #1000 		; v c o meteoro chegou no fim da tela
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
 	cmp r0, r1
 	jgr apagaMeteoro4
 
@@ -940,7 +940,7 @@ moveMeteoro5:
 	cmp r0, r1
 	jeq geraMeteoro5
 	
-	loadn r1, #1000 		; v c o meteoro chegou no fim da tela
+	loadn r1, #1039 		; v c o meteoro chegou no fim da tela
 	cmp r0, r1
 	jgr apagaMeteoro5
 
@@ -1219,7 +1219,7 @@ MoveNave_RecalculaPos:		; Recalcula posicao da Nave em funcao das Teclas pressio
 	jmp MoveNave_RecalculaPos_Fim
 
   MoveNave_RecalculaPos_S:	; Move Nave para Baixo
-	loadn R1, #1159
+	loadn R1, #1039
 	cmp R0, R1		; Testa condicoes de Contorno
 	jgr MoveNave_RecalculaPos_Fim
 	loadn R1, #40
