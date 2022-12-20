@@ -144,7 +144,10 @@ main:
 	;loadn R7, #65535		; Valor máximo que o incrementador chega
 
 	Loop:
-	
+
+		;; PRINT BACKGROUND
+		call background
+
 		loadn R1, #10
 		mod R1, R0, R1
 		cmp R1, R2			; if (mod(c/10)==0
@@ -167,6 +170,61 @@ main:
 		jmp Loop
 
 ;--------------------------FUNÇÕES------------------------
+
+;=====================BACKGROUND===========================
+background:
+
+	; r0 posicao inicial
+	; r1 string
+	; r2 é a cor
+
+	push r0
+	push r1
+	push r2
+	
+	loadn r2, #0 ; A COR É FIXA
+
+	loadn r0, #120
+	loadn r1, #star0
+	call print
+
+	loadn r0, #200
+	loadn r1, #star1
+	call print
+
+	loadn r0, #1560
+	loadn r1, #star2
+	call print
+
+	loadn r0, #360
+	loadn r1, #star0
+	call print
+
+	loadn r0, #800
+	loadn r1, #star3
+	call print
+
+	loadn r0, #600
+	loadn r1, #star4
+	call print
+
+	loadn r0, #240
+	loadn r1, #star4
+	call print
+
+	loadn r0, #760
+	loadn r1, #star2
+	call print
+
+	loadn r0, #960
+	loadn r1, #star3
+	call print
+
+	pop r2
+	pop r1
+	pop r0
+
+	rts
 
 ;=====================SCORE===========================
 makeScoreGame:
@@ -962,8 +1020,16 @@ ApagaTela:
 	pop r0
 	rts
 
-
 ;------------------------
+
+emptystr : string "                                        "
+star0    : string "         .                     .        "
+star1    : string "                                      . "
+star2    : string " .                .                     " 
+star3    : string "                         .              "
+star4    : string "        .                               "
+
+
 ; Declara uma tela vazia para ser preenchida em tempo de execussao:
 
 tela0Linha0  : string "                                        "
