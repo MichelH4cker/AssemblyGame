@@ -28,6 +28,52 @@ posTiro: var #1			; Contem a posicao atual do Tiro
 posAntTiro: var #1		; Contem a posicao anterior do Tiro
 FlagTiro: var #1		; Flag para ver se Atirou ou nao (Barra de Espaco!!)
 
+
+Rand: var #40    ; Variavel para numero randomico
+; Geracao de numeros randomicos para o jogo
+
+static Rand + #0, #58		
+static Rand + #1, #987		
+static Rand + #2, #456		
+static Rand + #3, #1951		
+static Rand + #4, #984		
+static Rand + #5, #1984		
+static Rand + #6, #13		
+static Rand + #7, #147		
+static Rand + #8, #258		
+static Rand + #9, #326		
+static Rand + #10, #178		
+static Rand + #11, #157		
+static Rand + #12, #15   	
+static Rand + #13, #997		
+static Rand + #14, #789		
+static Rand + #15, #194	    
+static Rand + #16, #159		
+static Rand + #17, #8114	
+static Rand + #18, #7032    
+static Rand + #19, #3258	
+static Rand + #20, #469	
+static Rand + #21, #6448	
+static Rand + #22, #118	
+static Rand + #23, #357		
+static Rand + #24, #7904	
+static Rand + #25, #4880		
+static Rand + #26, #4698	
+static Rand + #27, #97661	
+static Rand + #28, #2305		
+static Rand + #29, #1990
+static Rand + #30, #1955	
+static Rand + #31, #1959	
+static Rand + #32, #1988	
+static Rand + #33, #200	
+static Rand + #34, #357	
+static Rand + #35, #483	
+static Rand + #36, #1988	
+static Rand + #37, #639	
+static Rand + #38, #69	
+static Rand + #39, #74589
+
+
 ;Codigo principal
 main:
 
@@ -205,7 +251,11 @@ apagaMeteoro:
 
 geraNumero:
 
-	loadn r1, #55 ; gera um numero nem um pouco aleatorio
+	load r1, posNave
+	loadn r0, #Rand
+	add r0, r0, r1
+
+	load r1, posAntMeteoro
 	add r0, r0, r1
 
 	loadn r1, #40
