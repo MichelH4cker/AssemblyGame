@@ -114,6 +114,7 @@ main:
 	init:
 	loadn r0, #0
 	loadn r3, #0
+	store score, r0
 	call makeScoreGame
 
 	;call ApagaTela
@@ -370,7 +371,7 @@ fimJogo:
 	loadn r2, #' '
 	outchar r2, r0
 
-
+;print da tela de game over
 	call ApagaTela
 
 	push r0
@@ -389,6 +390,18 @@ fimJogo:
 	loadn r2, #0
 	call print
 
+    loadn r5, #440
+	add r0, r0, r5
+	loadn r1, #scorestr
+	loadn r2, #0
+	call print
+
+	load r0, score
+	loadn r1, #1126
+	call Printnr
+
+	load r0, score
+	;espera enter para reiniciar
 	call waitForBegin
 
 	jmp init
