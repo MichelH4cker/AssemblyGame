@@ -7,8 +7,18 @@ welcomestr: string
 
 ########################################"
 
+gameOverStr: string
+"########################################
+                                        
+            VOCE PERDEU!            
+                                        
+########################################"
+
 startstr: string 
 "         [Press ENTER to start]        "
+
+restartstr: string 
+"        [Press ENTER to restart]        "
 
 menustr: string
 "========================================"
@@ -101,6 +111,7 @@ main:
 
 	call waitForBegin
 
+	init:
 	loadn r0, #0
 	loadn r3, #0
 	call makeScoreGame
@@ -359,9 +370,28 @@ fimJogo:
 	loadn r2, #' '
 	outchar r2, r0
 
-	halt				; para o jogo
 
-	jmp moveMeteoro_Apaga
+	call ApagaTela
+
+	push r0
+	push r1
+	push r2
+	push r5
+
+	loadn r0, #0
+	loadn r1, #gameOverStr
+	loadn r2, #0
+	call print
+
+	loadn r5, #440
+	add r0, r0, r5
+	loadn r1, #restartstr
+	loadn r2, #0
+	call print
+
+	call waitForBegin
+
+	jmp init
 
 
 
